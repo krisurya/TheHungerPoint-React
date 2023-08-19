@@ -1,0 +1,152 @@
+<div class="container-fluid padding">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <p-tabView>
+          <p-tabPanel [header]="category.name" *ngFor="let category of categories">
+
+
+
+
+
+                      <p-table
+                        #dt2
+                        [value]="category.products"
+                        dataKey="id"
+                        [rows]="10"
+                        [showCurrentPageReport]="true"
+                        [rowsPerPageOptions]="[10, 25, 50]"
+                        [paginator]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [globalFilterFields]="['name', 'price']"
+                        [tableStyle]="{ 'min-width': '75rem' }"
+                        >
+                        <ng-template pTemplate="caption">
+                            <div class="flex">
+                                <span class="p-input-icon-left ml-auto">
+                                    <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                              <th style="width:22%">Item</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>
+                                  <div class="p-col-12 pl-0 cp pos-sale-item" (click)="addItemToCart(product)">
+                                    <div class="media bg-blur rounded m-1">
+                                      <img class="mr-3 pos-sale-img" [src]="product.imageURL" width="50" alt="Generic placeholder image">
+                                      <div class="media-body">
+                                        <h5 class="mt-0">{{ product.name }}</h5>
+                                        {{ product.price | currency:'INR' }}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="5">No customers found.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <p-button label="ADD Item to cart" (click)="toggleManualItemToCart()"  *ngIf="!manualItemToCart"></p-button>
+      <p-button label="Hide manual addition" (click)="toggleManualItemToCart()" *ngIf="manualItemToCart"></p-button>
+      <div class="card">
+        <div>
+          <div style="min-height: 520px !important;">
+            <table class="table text-dark">
+              <thead>
+                <tr>
+                  <th class="text-capitalize">Q</th>
+                  <th class="text-capitalize">Product</th>
+                  <th class="text-capitalize">Price</th>
+                  <th class="text-capitalize">Discount</th>
+                  <th class="text-capitalize text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of basket">
+                  <td>{{ x.quantity }}</td>
+                  <td>{{ x.name }}</td>
+                  <td>
+                    <div *ngIf="x.discount">
+                      <s>{{ x.price  | currency:'INR' }}</s>
+                      {{ x.discountPrice  | currency:'INR' }}
+                    </div>
+                    <div *ngIf="!x.discount">
+                      {{ x.price  | currency:'INR' }}
+                    </div>
+                  </td>
+                  <td><input type="text" [(ngModel)]="x.discount" (input)="updateDiscount(x)" style="width: 25px;" />%</td>
+                  <td class="text-right">
+                    <button class="btn btn-primary btn-sm px-2 py-1 mr-1" (click)="add(x)">+</button>
+                    <button class="btn btn-warning btn-sm px-2 py-1 mr-1" (click)="reduce(x)">-</button>
+                    <button class="btn btn-danger btn-sm px-2 py-1" (click)="remove(x)">x</button>
+                  </td>
+                </tr>
+                <tr *ngIf="!basket">
+                  <td colspan="7">No products found.</td>
+                </tr>
+                <tr *ngIf="manualItemToCart">
+                  <td>
+                    <input type="number" [(ngModel)]="manualItem.quantity" style="width: 25px;" />
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="manualItem.name"  />
+                  </td>
+                  <td>
+                    <input type="number" [(ngModel)]="manualItem.price"  />
+                  </td>
+                  <td></td>
+                  <td>
+                    <p-button label="Add to cart" (click)="addItemsToCartManually()" ></p-button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="container m-2">
+            <div class="row align-content-center" *ngIf="basket.length">
+              <div class="col-md-6">
+                <p class="mt-2 text-dark"><span class="mr-3">Total:</span> <strong>{{ cartTotal | currency:'INR' }}</strong></p>
+              </div>
+              <div class="col-md-6 text-right">
+                <button class="btn btn-primary btn-block" (click)="checkout()">Buy</button>
+                <button class="btn btn-primary btn-block" (click)="print()">Print</button>
+              </div>
+              <div id="print-section" style="display: block;" *ngIf="basket.length">
+                <reciept [basket]=basket [cartTotal]=cartTotal [newOrderID]="newOrderID"></reciept>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

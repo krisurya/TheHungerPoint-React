@@ -1,0 +1,4 @@
+<nf-form [fields]="fields" [formConfig]="formConfig" (callBack)="callBack($event)"></nf-form>
+<br />
+<label for="file">Select Image:</label>
+<input type="file" (change)="upload($event)" accept=".png,.jpg" />
