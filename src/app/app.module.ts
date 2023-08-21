@@ -47,12 +47,14 @@ import { ProductsComponent } from './views/private/products/products.component';
 import { SalesComponent } from './views/private/sales/sales.component';
 import { InvoiceComponent } from './views/public/invoice/invoice.component';
 import { RecieptComponent } from './views/reciept/reciept.component';
+import { MenuComponent } from './views/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PosComponent,
+    MenuComponent,
     DefaultLayoutComponent,
     AppLayoutComponent,
     NavbarComponent,

@@ -3,14 +3,17 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { HomeComponent } from './views/public/home/home.component';
-import { PosComponent } from './views/public/pos/pos.component';
 import { LoginComponent } from './views/public/auth/login/login.component';
 import { AppLayoutComponent } from './core/layouts/app-layout/app-layout.component';
-import { InvoiceComponent } from './views/public/invoice/invoice.component';
 import { RegisterComponent } from './views/public/auth/register/register.component';
+import { MenuComponent } from './views/menu/menu.component';
 
 
 const routes: Routes = [
+  {
+    path: 'menu',
+    component: MenuComponent
+  },
   {
     path: '',
     component: DefaultLayoutComponent,
@@ -26,14 +29,6 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent,
-      },
-      {
-        path: 'pos',
-        component: PosComponent,
-      },
-      {
-        path: 'invoice',
-        component: InvoiceComponent,
       }
     ]
   },

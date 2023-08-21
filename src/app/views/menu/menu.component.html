@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head>
+<style>
+body  {
+  background-color: #545454;
+  color: yellow;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+</style>
+</head>
+<body>
+    <div class="container-fluid padding">
+        <div class="card" style="background-color: white;">
+            <p-tabView>
+                <p-tabPanel [header]="tab.name" *ngFor="let tab of tabList" style="color: yellow; background-color: white;">
+                    {{tab.content}}
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+</body>
+</html>

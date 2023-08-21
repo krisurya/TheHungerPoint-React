@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.left {
+  text-align: left;
+}
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+</style>
+</head>
+<body>
+<div class="receipt-container">
+    <div class="receipt-header">
+        <div class="Header">
+            <div class="receipt-footer">
+                <div class="left" style="font-size: 20px;">The Hunger Point</div>
+                <div class="right margin-top-minus-20" style="display:block;font-size: 12px;">Order No. {{newOrderID}}</div>
+            </div>
+            <span style="font-size: 12px;">Thank you for visiting, we were glad to serve you</span>
+        </div>
+    </div>
+    <div class="receipt-body">
+        <table>
+            <tr>
+                <th class="" style="font-size: 9px;width: 70%;text-align: left;">Item</th>
+                <th class="" style="font-size: 9px;width: 5%;text-align: left;">QTY</th>
+                <th class="" style="font-size: 9px;width: 25%;text-align: right;">INR</th>
+            </tr>
+            <tr *ngFor="let x of basket">
+                <td class=""><span style="font-size: 12px;width: 70%;text-align: center;">{{x.name}}</span></td>
+                <td class=""><span style="font-size: 12px;width: 5%; text-align: left;">{{x.quantity}}</span></td>
+                <td class="">
+                    <span style="font-size: 12px;width: 25%; text-align: right;" *ngIf="x.discount">
+                        <s>{{ x.price  | currency:'INR' }}</s>
+                        {{ x.discountPrice  | currency:'INR' }}
+                    </span>
+                    <span style="font-size: 12px;width: 25%; text-align: right;" *ngIf="!x.discount">
+                    {{ x.price  | currency:'INR' }}
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="receipt-footer">
+        <div class="left margin-top-20">Total Amount</div>
+        <div class="right margin-top-minus-20" style="display:block;">{{ cartTotal | currency:'INR' }}</div>
+    </div>
+
+    <div class="receipt-payment" *ngIf="addQRCode">
+        <img style="width: 120px;height: 120px;" src="../../../assets/img/QRCode.PNG"/><br />
+        <span style="font-size: 12px;">Scan to make payment</span>
+    </div>
+</div>
+</body>
+</html>
